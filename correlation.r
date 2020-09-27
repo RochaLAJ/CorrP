@@ -19,7 +19,7 @@
 
 #I recommend a corr matrix provided by Hmisc::rcorr function.
 #An automated and pretty option is possible through corrplot package.
-CorrP <- function(cormat, pmat, FDR=FALSE, plot=FALSE) {
+CorrP <- function(cormat, pmat, FDR=FALSE, plot=FALSE, sum=FALSE) {
     ut <- upper.tri(cormat)
         Row = rownames(cormat)[row(cormat)[ut]]
         Column = rownames(cormat)[col(cormat)[ut]]
@@ -32,16 +32,24 @@ CorrP <- function(cormat, pmat, FDR=FALSE, plot=FALSE) {
         envir = as.environment(pos)
         data <- assign("CorrMatrix", data, envir = envir)
         hist = data
+    if (sum)
+        P.FDR <- ifelse(data$P.FDR<=0.05, "Correlated", "NC")
+        print(table(P.FDR))
+        raw_pvalue <- ifelse(data$Pvalue<=0.05, "Correlated", "NC")
+        print(table(raw_pvalue))
     if (plot)
         par(mfrow=c(1,3))
         hist$Row = NULL
         hist$Column = NULL
-        hist(hist$R, main="Histogram of R values", col=heat.colors(4))
-        hist(hist$Pvalue, main="Histogram of raw Pvalues", col=heat.colors(4))
+        hist(hist$R, main="Histogram of R values", col=heat.colors(4), lwd=2)
+        hist(hist$Pvalue, main="Histogram of raw Pvalues", col=heat.colors(4), lwd=2)
         hist(hist$P.FDR, main="Histogram of Pvalues \n [FDR]", col=heat.colors(4), lwd=2)
+        
 }
+CorrP(cor$r, cor$P, FDR=TRUE, plot=TRUE, sum=TRUE)
+
 
 Example:
 data = read.csv("file.csv", header=T, row.names=1)
 cor = rcorr(data.matrix(data), type="spearman")
-CorrP(corr$r, corr$P, FDR=TRUE, plot=TRUE) #An object called CorrMatrix will be created
+CorrP(corr$r, corr$P, FDR=TRUE, plot=TRUE, sum=TRUE) #An object called CorrMatrix will be created
