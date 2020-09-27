@@ -18,6 +18,7 @@
 
 
 #I recommend a corr matrix provided by Hmisc::rcorr function.
+#An automated and pretty option is possible through corrplot package.
 CorrP <- function(cormat, pmat, FDR=FALSE, plot=FALSE) {
     ut <- upper.tri(cormat)
         Row = rownames(cormat)[row(cormat)[ut]]
