@@ -1,21 +1,12 @@
 # CorrP
 A simple adaptation of flattenCorMatrix() function to provide histogram and corrected Pvalues
 This function is inspired by flattenCorMatrix found at http://www.sthda.com/english/wiki/correlation-matrix-formatting-and-visualization
-The original formula is:
-flattenCorrMatrix <- function(cormat, pmat) {
-  ut <- upper.tri(cormat)
-  data.frame(
-    row = rownames(cormat)[row(cormat)[ut]],
-    column = rownames(cormat)[col(cormat)[ut]],
-    cor  =(cormat)[ut],
-    p = pmat[ut]
-    )
-}
+
 
 I had trouble to change the title of the plots through a loop strategy. My best result was:
- titles = as.list("x1","x2","x3")  
-   for (x in hist)
-        hist(x, main=substitute(paste(titles(colnames[x]))))
+ titles = as.list("x1","x2","x3")  ;
+   for (x in hist)  ;
+        hist(x, main=substitute(paste(titles(colnames[x])))) ;
 I had to keep it manual
 
 
