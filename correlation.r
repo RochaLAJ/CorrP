@@ -31,22 +31,13 @@ CorrP <- function(cormat, pmat, FDR=FALSE, plot=FALSE, sum=FALSE) {
         pos <- 1
         envir = as.environment(pos)
         data <- assign("CorrMatrix", data, envir = envir)
-        hist = data
     if (sum)
         P.FDR <- ifelse(data$P.FDR<=0.05, "Correlated", "NC")
         print(table(P.FDR))
         raw_pvalue <- ifelse(data$Pvalue<=0.05, "Correlated", "NC")
-        print(table(raw_pvalue))
-    if (plot)
-        par(mfrow=c(1,3))
-        hist$Row = NULL
-        hist$Column = NULL
-        hist(hist$R, main="Histogram of R values", col=heat.colors(4), lwd=2)
-        hist(hist$Pvalue, main="Histogram of raw Pvalues", col=heat.colors(4), lwd=2)
-        hist(hist$P.FDR, main="Histogram of Pvalues \n [FDR]", col=heat.colors(4), lwd=2)
-        
+        print(table(raw_pvalue))      
 }
-CorrP(cor$r, cor$P, FDR=TRUE, plot=TRUE, sum=TRUE)
+CorrP(cor$r, cor$P, FDR=TRUE, sum=TRUE)
 
 
 Example:
